@@ -91,6 +91,7 @@ if(!empty($_POST['name']) && !empty($_POST['pass']) ) {
 
 	if($result){
 	echo "Account Successfully Created";
+	header("Location: admin.php");
 	} else {
 	echo "Failure!";
 	}

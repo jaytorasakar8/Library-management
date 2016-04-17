@@ -1,8 +1,49 @@
-<?php
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<title>Admin login</title>
+	
+	
+	<link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
+</head>
+<body>
 
+<div id="header">
+	<img src="logo.png" name="logo" />
+	
+	<p id="layoutdims"><marquee>Welcome to Online Library Management System</marquee></p>
+</div>
+<div class="colmask threecol">
+	<div class="colmid">
+		<div class="colleft">
+			<div class="col1">
+				<!-- Column 1 start -->
+				<br><br><br>
+
+<?php
+ $server = "localhost"; 
+	$user = "root";
+	$password = "";
+	$database = "library"; 
+	mysql_connect($server,$user,$password)
+	or die ("Connection Fails"); 
+	mysql_select_db($database) or die ("Database Not Found");
+echo "<table border='1' align='center' cellpadding='5'> 
+ <th>Issue_id </th>
+ <th>Return_id </th>
+ <th>Bid</th> 
+ <th>Mid</th>
+ <th>Name</th>
+ <th>Issue_date</th>
+ <th>Return_date</th>
+ <th>diff</th>
+ <th>Amount</th>
+ <th>Action</th>";
 
 $result=mysql_query("SELECT * FROM returnstore where diff>0");
+
 $no=1;
+	
 	while ($row=mysql_fetch_array($result))
 	{
     $return_id=$row['Return_id'];
@@ -15,10 +56,23 @@ $no=1;
     $returndate=$row['Return_date'];
 	$diff=$row['diff'];
 
- $sql=mysql_query("insert into fine_unpaid(Issue_id,Return_id,Bid,Mid,Name,Issue_date,Return_date,diff,Amount) 
-   values($issue_id,$returnid,$bid,$mid,$mname,$issuedate,$returndate,$diff,'100')");
-$no++;
-	}
+
+ 
+
+echo" <tr>
+<td>$issue_id</td>
+<td>$return_id</td>
+<td>$bid</td>
+<td>$mid</td>
+<td>$name</td>
+<td>$validreturndate</td>
+<td>$returndate</td>
+<td>$diff</td>
+<td>'100'</td>
+</tr>"
+;
+}
+	
 
 
 
@@ -28,3 +82,35 @@ $no++;
 
 
 ?>
+<br><br><br><br><br><br>
+				
+				<!-- Column 1 end -->
+			</div>
+			<div class="col2">
+				<!-- Column 2 start -->
+					<br><br>
+
+					<a href="admin.php" style="font-size:25px; background-color:transparent;text-decoration:none; color:#369; "><b>Home</b></a><br><br>
+				
+				<!-- Column 2 end -->
+			</div>
+			<div class="col3">
+				<!-- Column 3 start -->
+					<div id="ads">
+					
+						
+					
+					</div>
+				<!-- Column 3 end -->
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer">
+	
+	
+	
+</div>
+
+</body>
+</html>

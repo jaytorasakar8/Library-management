@@ -85,7 +85,7 @@ if(isset($_POST["submit"])){
 if(!empty($_POST['name']) && !empty($_POST['pass']) && !empty($_POST['mid']) && !empty($_POST['email']) && !empty($_POST['branch']) && !empty($_POST['year'])&& !empty($_POST['contactno']) && !empty($_POST['address'])) 
 {
 	$name=$_POST['name'];
-	$mid=$_POST['Mid'];
+	$mid=$_POST['mid'];
 	$email=$_POST['email'];
 	$pass=$_POST['pass'];
 	$branch=$_POST['branch'];
@@ -107,6 +107,7 @@ if(!empty($_POST['name']) && !empty($_POST['pass']) && !empty($_POST['mid']) && 
 		if($result){
 	
 		echo "Account Successfully Created";
+		header("Location: member.php");
 		}
 		else
 		{
