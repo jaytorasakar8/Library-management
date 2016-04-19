@@ -1,3 +1,4 @@
+//this file is meant to incorporate any changes made to book details so as to keep the database up to date
 <?php 
 $server = "localhost"; 
 $user = "root";
