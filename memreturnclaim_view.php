@@ -6,12 +6,11 @@ if(!isset($_SESSION["sess_user"])){
 {
 ?>
 <?php
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+	include 'conn.php';
 	
 	$mid=$_SESSION['mid'];
 	
-	$result=mysql_query("SELECT * FROM issuebook where Mid='$mid'");
+	$result=$mysqli_query("SELECT * FROM issuebook where Mid='$mid'");
 	
 	
 	
@@ -28,7 +27,7 @@ if(!isset($_SESSION["sess_user"])){
  <th>Action</th>";
  
  $no=1;
- while($r=mysql_fetch_assoc($result))
+ while($r=$result->fetch_assoc())
  { 
  echo "<tr>
  <td>$r[Issue_id]</td> 

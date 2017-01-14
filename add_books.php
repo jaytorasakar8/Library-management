@@ -78,16 +78,15 @@ if(!empty($_POST['bname']) && !empty($_POST['bid']) )
 	$bid=$_POST['bid'];
 	
 
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+	include 'conn.php';
 
-	$query=mysql_query("SELECT * FROM book WHERE Bid='".$bid."'");
-	$numrows=mysql_num_rows($query);
+	$query=$mysqli->query("SELECT * FROM book WHERE Bid='".$bid."'");
+	$numrows=$query->num_rows;
 		if($numrows==0)
 		{
 			$sql="INSERT INTO book(Bid,Bname,Subject,Author,Availability) VALUES('$bid','$bname','$subject','$author','$availability')";
 
-			$result=mysql_query($sql);
+			$result=$mysqli->query($sql);
 
 
 			if($result){

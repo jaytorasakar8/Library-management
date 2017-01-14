@@ -52,14 +52,25 @@ if(!empty($_POST['memusername']) && !empty($_POST['mempassword'])) {
 	$user=$_POST['memusername'];
 	$pass=$_POST['mempassword'];
 
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+	include 'conn.php';
 
-	$query=mysql_query("SELECT * FROM member WHERE Mid='".$user."' AND Password='".$pass."'");
-	$numrows=mysql_num_rows($query);
+	$sql = sprintf("SELECT * FROM member WHERE Mid='%s' AND Password='%s'",
+		$mysqli->real_escape_string($user),
+		$mysqli->real_escape_string($pass));
+
+	$result=$mysqli->query($sql);
+	
+	if(!$result){
+		$message = 'Invalid query:'.$mysqli->error."<br>";
+		$message .= 'Whole query:'.$sql;
+		die($message);
+	}
+
+	$numrows = $result->num_rows;
+	
 	if($numrows!=0)
 	{
-	while($row=mysql_fetch_assoc($query))
+	while($row=$result->fetch_assoc())
 	{
 	$dbuser=$row['Name'];
 	$dbusername=$row['Mid'];
@@ -71,6 +82,7 @@ if(!empty($_POST['memusername']) && !empty($_POST['mempassword'])) {
 	session_start();
 	$_SESSION['sess_user']=$dbuser;
 	$_SESSION['mid']=$dbusername;
+	$_SESSION['level']="member";
 
 	/* Redirect browser */
 	header("Location: member.php");

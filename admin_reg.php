@@ -77,16 +77,14 @@ if(!empty($_POST['name']) && !empty($_POST['pass']) ) {
 	$address=$_POST['add'];
 	
 
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
-
-	$query=mysql_query("SELECT * FROM admin WHERE Email='".$email."'");
-	$numrows=mysql_num_rows($query);
+	include 'conn.php';
+	$query=$mysqli->query("SELECT * FROM admin WHERE Email='".$email."'");
+	$numrows=$mysqli->num_rows;
 	if($numrows==0)
 	{
 	$sql="INSERT INTO admin(Name,Email,Password,contactno,Address) VALUES('$name','$email','$pass','$contact','$address')";
 
-	$result=mysql_query($sql);
+	$result=$mysqli->query($sql);
 
 
 	if($result){

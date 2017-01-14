@@ -20,17 +20,10 @@
 				<!-- Column 1 start -->
 				<br>
 				<?php
- $server = "localhost"; 
-$user = "root";
- $password = "";
- $database = "library"; 
- mysql_connect($server,$user,$password)
- or die ("Connection Fails"); 
- mysql_select_db($database) or die ("Database Not Found");
+ include 'conn.php';
  
- 
- $data = mysql_query("SELECT * FROM member WHERE Mid='$_GET[mid]'");
- $r=mysql_fetch_array($data);
+ $data = $mysqli->query("SELECT * FROM member WHERE Mid='$_GET[mid]'");
+ $r=$data->fetch_array();
   
  echo "<h2>Edit Account</h2><hr> 
  <form method='POST' action='ADupdate_member.php'> 

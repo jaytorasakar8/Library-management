@@ -29,11 +29,10 @@
 					if(isset($_POST["submit"]))
 					{
 						$code=$_POST['code'];
-						$con=mysql_connect('localhost','root','') or die(mysql_error());
-						mysql_select_db('library') or die("cannot select DB");
+						include 'conn.php';
 						
-						$query=mysql_query("SELECT * FROM library_code");
-						while($row=mysql_fetch_assoc($query))
+						$query=$mysqli->query("SELECT * FROM library_code");
+						while($row=$query->fetch_assoc())
 						{
 							$dbcode=$row['code'];
 						}

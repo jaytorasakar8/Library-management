@@ -29,14 +29,13 @@ if(!isset($_SESSION["sess_user"])){
 					<br><br>
 				
 <?php
-$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+include 'conn.php';
 	
 	$mid=$_SESSION['mid'];
 	
 
-$result = mysql_query("select * from member where Mid='".$mid."'");
-while($row = mysql_fetch_array($result))
+$result = $mysqli->query("select * from member where Mid='".$mid."'");
+while($row = $result->fetch_array())
 {
  
 ?>

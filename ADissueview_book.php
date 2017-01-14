@@ -19,26 +19,20 @@
 				<!-- Column 1 start -->
 				<br><br><br>
 <?php 
-	$server = "localhost"; 
-	$user = "root";
-	$password = "";
-	$database = "library"; 
-	mysql_connect($server,$user,$password)
-	or die ("Connection Fails"); 
-	mysql_select_db($database) or die ("Database Not Found");
+	include 'conn.php';
   
 	//check for request expiry  
 	
-	$data = mysql_query("SELECT * FROM requestbook");
+	$data = $mysqli->query("SELECT * FROM requestbook");
 	
-	while ($r=mysql_fetch_array($data))
+	while ($r=$data->fetch_array())
 	{
 		$requestdate=new DateTime($r['requestdate']);
 		$viewrequestdate=new DateTime(date('Y-m-d'));
 		$diff=date_diff($requestdate,$viewrequestdate);
 		$days=$diff->d;
-		$sql=mysql_query("Update requestbook set requestexpirydays='$days'");
-		$sql1=mysql_query("delete from requestbook where requestexpirydays>0");
+		$sql=$mysqli->query("Update requestbook set requestexpirydays='$days'");
+		$sql1=$mysqli->query("delete from requestbook where requestexpirydays>0");
 	}
 	
  

@@ -21,14 +21,8 @@
 				<!-- Column 1 start -->
 				<br><br><br>
 				<?php 
-$server = "localhost"; 
-$user = "root";
- $password = "";
- $database = "library"; 
- mysql_connect($server,$user,$password)
- or die ("Connection Fails"); 
- mysql_select_db($database) or die ("Database Not Found");
- $data = mysql_query("SELECT * FROM claimreturn"); 
+include 'conn.php';
+ $data = $mysqli->query("SELECT * FROM claimreturn"); 
    echo "<table border='1' align='center'> 
   <th>Return claimID</th>
   <th>Issue Id</th>
@@ -42,7 +36,7 @@ $user = "root";
  <th>Action</th>";
  
  $no=1;
- while ($r=mysql_fetch_array($data))
+ while ($r=$data->fetch_array())
  { 
  echo "<tr>
  <td>$r[claim_return_id]</td> 
