@@ -28,16 +28,14 @@ if(!isset($_SESSION["sess_user"])){
 				<br><br><br>
 				
 				<?php
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
-	
+	include 'conn.php';
 	
 	
 	
 	$mid=$_SESSION['mid'];
 	
-	$result=mysql_query("SELECT * FROM book where Bid='$_GET[bid]'");
-	while($row=mysql_fetch_assoc($result))
+	$result=$mysqli->query("SELECT * FROM book where Bid='$_GET[bid]'");
+	while($row=$result->fetch_assoc())
 	{
 	$available=$row['Availability'];
 	$bid=$row['Bid'];
@@ -46,8 +44,8 @@ if(!isset($_SESSION["sess_user"])){
 	}
 
 	$mid=$_SESSION['mid'];
-	$query=mysql_query("select * from member where Mid='$mid'");
-	while($row=mysql_fetch_assoc($query))
+	$query=$mysqli->query("select * from member where Mid='$mid'");
+	while($row=$query->fetch_assoc())
 	{
 		$mid=$row['Mid'];
 		$mname=$row['Name'];
@@ -55,8 +53,8 @@ if(!isset($_SESSION["sess_user"])){
 	}
 	//check book availability and no of books issued by member
 	
-	$query2=mysql_query("select * from member where Mid='$mid'");
-	while($row=mysql_fetch_assoc($query2))
+	$query2=$mysqli->query("select * from member where Mid='$mid'");
+	while($row=$query2->fetch_assoc())
 	{
 		$book1=$row['Book1'];
 		$book2=$row['Book2'];
@@ -84,7 +82,7 @@ if(!isset($_SESSION["sess_user"])){
 	
 	$sql="INSERT INTO requestbook(Mid,Name,Bid,Bname,requestdate) VALUES('$mid','$mname','$bid','$bname',now())";
    
-	$result=mysql_query($sql);
+	$result=$mysqli->query($sql);
 	if($result)
 	{
 		echo "Request sent";

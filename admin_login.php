@@ -52,35 +52,57 @@ if(!empty($_POST['adusername']) && !empty($_POST['adpassword'])) {
 	$user=$_POST['adusername'];
 	$pass=$_POST['adpassword'];
 
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+	include 'conn.php';
+	$sql = sprintf("SELECT * FROM admin WHERE Email='%s' AND Password='%s'",
+		$mysqli->real_escape_string($user),
+		$mysqli->real_escape_string($pass));
+	
+	$result=$mysqli->query($sql);
+	
+	
+	/* if there are some errors with the sql */
+	if(!$result){
+		$message = 'Invalid query:'.$mysqli->error."<br>";
+		$message .= 'Whole query:'.$sql;
+		die($message);
+	}
 
-	$query=mysql_query("SELECT * FROM admin WHERE Email='".$user."' AND Password='".$pass."'");
-	$numrows=mysql_num_rows($query);
+	//$numrows=mysql_num_rows($query);
+	$numrows = $result->num_rows;
+	
+		
 	if($numrows!=0)
 	{
-	while($row=mysql_fetch_assoc($query))
-	{
-	$dbusername=$row['Email'];
-	$dbpassword=$row['Password'];
-	$Name=$row['Name'];
-	}
+		while($row=$result->fetch_assoc())
+		{
 
-	if($user == $dbusername && $pass == $dbpassword)
-	{
-	session_start();
-	$_SESSION['sess_user']=$Name;
+			$dbusername=$row['Email'];
+			$dbpassword=$row['Password'];
+			$Name=$row['Name'];
+		}
 
-	/* Redirect browser */
-	header("Location: admin.php");
-	}
-	} else {
-	echo "Invalid username or password!";
-	}
 
-} else {
+		if($user == $dbusername && $pass == $dbpassword)
+		{
+
+			session_start();
+			$_SESSION['sess_user']=$Name;
+
+			/* Redirect browser */
+			header("Location: admin.php");
+		}
+	}
+	else{
+		echo "Invalid username or password!";
+	}
+	$result->free();
+	$mysqli->close();
+
+} 
+else {
 	echo "All fields are required!";
 }
+
 }
 ?>
 

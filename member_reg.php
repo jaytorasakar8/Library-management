@@ -94,16 +94,15 @@ if(!empty($_POST['name']) && !empty($_POST['pass']) && !empty($_POST['mid']) && 
 	$address=$_POST['address'];
 	
 
-	$con=mysql_connect('localhost','root','') or die(mysql_error());
-	mysql_select_db('library') or die("cannot select DB");
+	include 'conn.php';
 
-	$query=mysql_query("SELECT * FROM member WHERE Mid='".$mid."'");
-	$numrows=mysql_num_rows($query);
+	$query=$mysqli->query("SELECT * FROM member WHERE Mid='".$mid."'");
+	$numrows=$query->num_rows;
 	if($numrows==0)
 	{
 		$sql="INSERT INTO member(Name,Mid,Email,Password,Branch,Year,ContactNo,Address) VALUES('$name','$mid','$email','$pass','$branch','$year','$contact','$address')";
 
-		$result=mysql_query($sql);
+		$result=$mysqli->query($sql);
 		if($result){
 	
 		echo "Account Successfully Created";

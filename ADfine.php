@@ -21,13 +21,7 @@
 				<br><br><br>
 
 <?php
- $server = "localhost"; 
-	$user = "root";
-	$password = "";
-	$database = "library"; 
-	mysql_connect($server,$user,$password)
-	or die ("Connection Fails"); 
-	mysql_select_db($database) or die ("Database Not Found");
+ include 'conn.php';
 echo "<table border='1' align='center' cellpadding='5'> 
  <th>Issue_id </th>
  <th>Return_id </th>
@@ -40,11 +34,11 @@ echo "<table border='1' align='center' cellpadding='5'>
  <th>Amount</th>
  <th>Action</th>";
 
-$result=mysql_query("SELECT * FROM returnstore where diff>0");
+$result=$mysqli->query("SELECT * FROM returnstore where diff>0");
 
 $no=1;
 	
-	while ($row=mysql_fetch_array($result))
+	while ($row=$result->fetch_array())
 	{
     $return_id=$row['Return_id'];
 	$issue_id=$row['Issue_id'];

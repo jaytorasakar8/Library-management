@@ -20,17 +20,10 @@
 				<!-- Column 1 start -->
 				
 				<?php
- $server = "localhost"; 
-$user = "root";
- $password = "";
- $database = "library"; 
- mysql_connect($server,$user,$password)
- or die ("Connection Fails"); 
- mysql_select_db($database) or die ("Database Not Found");
+ include 'conn.php';
  
- 
- $data = mysql_query("SELECT * FROM book WHERE Bid='$_GET[bid]'");
- $r=mysql_fetch_array($data);
+ $data = $mysqli->query("SELECT * FROM book WHERE Bid='$_GET[bid]'");
+ $r=$data->fetch_array();
  
  echo "<h2>Edit Book</h2><hr> 
  <form method='POST' action='update_book.php'> 

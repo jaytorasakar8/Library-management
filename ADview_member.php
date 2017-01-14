@@ -21,14 +21,8 @@
 				<br>
 				<h2>Member Details</h2>
 				<?php 
-$server = "localhost"; 
-$user = "root";
- $password = "";
- $database = "library"; 
- mysql_connect($server,$user,$password)
- or die ("Connection Fails"); 
- mysql_select_db($database) or die ("Database Not Found");
- $data = mysql_query("SELECT * FROM member"); 
+include 'conn.php';
+ $data = $mysqli->query("SELECT * FROM member"); 
  echo "<table border='1'> 
  <th>Name</th> 
  <th>Roll No:</th> 
@@ -43,7 +37,7 @@ $user = "root";
  <th>Acction</th>";
  
  
- while ($r=mysql_fetch_array($data))
+ while ($r=$data->fetch_array())
  { 
  echo "<tr>
  <td>$r[Name]</td> 

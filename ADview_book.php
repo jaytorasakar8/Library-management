@@ -20,14 +20,9 @@
 				<!-- Column 1 start -->
 				<br><br><br>
 				<?php 
-$server = "localhost"; 
-$user = "root";
- $password = "";
- $database = "library"; 
- mysql_connect($server,$user,$password)
- or die ("Connection Fails"); 
- mysql_select_db($database) or die ("Database Not Found");
- $data = mysql_query("SELECT * FROM book"); 
+include 'conn.php';
+
+ $data = $mysqli->query("SELECT * FROM book"); 
    echo "<table border='1' align='center' cellpadding='5'> 
  <th>Book ID</th> 
  <th>Book Name</th> 
@@ -40,7 +35,7 @@ $user = "root";
  <th>Acction</th>";
  
  
- while ($r=mysql_fetch_array($data))
+ while ($r=$data->fetch_array())
  { 
  echo "<tr>
  <td>$r[Bid]</td> 
